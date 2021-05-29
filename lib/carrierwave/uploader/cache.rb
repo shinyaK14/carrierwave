@@ -24,11 +24,12 @@ module CarrierWave
   # [String] a cache id in the format TIMEINT-PID-COUNTER-RND
   #
   def self.generate_cache_id
-    [Time.now.utc.to_i,
-      SecureRandom.random_number(1_000_000_000_000_000),
-      '%04d' % (CarrierWave::CacheCounter.increment % 10_000),
-      '%04d' % SecureRandom.random_number(10_000)
-    ].map(&:to_s).join('-')
+    '-'
+    # [Time.now.utc.to_i,
+    #   SecureRandom.random_number(1_000_000_000_000_000),
+    #   '%04d' % (CarrierWave::CacheCounter.increment % 10_000),
+    #   '%04d' % SecureRandom.random_number(10_000)
+    # ].map(&:to_s).join('-')
   end
 
   module Uploader
@@ -198,7 +199,7 @@ module CarrierWave
       def cache_id=(cache_id)
         # Earlier version used 3 part cache_id. Thus we should allow for
         # the cache_id to have both 3 part and 4 part formats.
-        raise CarrierWave::InvalidParameter, "invalid cache id" unless cache_id =~ /\A(-)?[\d]+\-[\d]+(\-[\d]{4})?\-[\d]{4}\z/
+        # raise CarrierWave::InvalidParameter, "invalid cache id" unless cache_id =~ /\A(-)?[\d]+\-[\d]+(\-[\d]{4})?\-[\d]{4}\z/
         @cache_id = cache_id
       end
 
